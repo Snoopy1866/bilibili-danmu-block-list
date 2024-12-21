@@ -1,0 +1,83 @@
+name: fix
+
+on:
+  schedule:
+    - cron: "17 19 * * *"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash -e {0}
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Get previous tag or default to changed=true
+        id: previous_tag
+        run: |
+          prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+
+          if [ "$prev_tag" == "none" ]; then
+            echo "No tags found. Setting changed=true by default."
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "Previous tag: $prev_tag"
+            echo "previous_tag=$prev_tag" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get the json file fron previous tag
+        run: |
+          temp_dir=$(mktemp -d)
+          git switch --detach $previous_tag
+          cp bilibili-danmu-blocklist.json $temp_dir/bilibili-danmu-blocklist-old.json
+          git switch -
+          cp $temp_dir/bilibili-danmu-blocklist-old.json bilibili-danmu-blocklist-old.json
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.5.9"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Compare diff between old json and new json file
+        run: |
+          uv run scripts/diff.py
+          if ![ -e diff.md ]; then
+            echo "rules has not beed changed since last release."
+            exit 0
+          fi
+
+      - name: Create output json and release note file
+        run: uv run scripts/release.py
+
+      - name: Set Git Config
+        run: |
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create a new tag
+        id: create_tag
+        run: |
+          tag_name=$(date +"%Y%m%d")
+          git tag -a $tag_name -m "Release $tag_name"
+          git push origin $tag_name
+
+      - name: Create Release
+        id: create_release
+        run: |
+          gh release create $tag_name bilibili-danmu-blocklist-output.json --title "Release $tag_name" -F diff.md
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

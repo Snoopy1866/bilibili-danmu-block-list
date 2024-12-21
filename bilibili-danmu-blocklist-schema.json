@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "bilibili-block-schema",
+  "title": "bilibili-block-schema",
+  "description": "bilibili-block-schema",
+  "type": "object",
+  "properties": {
+    "rules": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "规则类型，0 表示屏蔽文本，1 表示屏蔽正则，3 表示屏蔽用户（不可使用）。",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "filter": {
+            "type": "string",
+            "description": "规则内容"
+          },
+          "opened": {
+            "type": "boolean",
+            "description": "规则是否启用"
+          },
+          "id": {
+            "type": "integer",
+            "description": "规则唯一标识符"
+          },
+          "description": {
+            "type": "string",
+            "description": "规则描述"
+          },
+          "examples": {
+            "type": "array",
+            "description": "规则匹配示例",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "excludeExamples": {
+            "type": "array",
+            "description": "规则排除示例",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "type",
+          "filter",
+          "opened"
+        ],
+        "if": {
+          "properties": {
+            "type": {
+              "const": 2
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "filter": {
+              "pattern": "\\d+$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

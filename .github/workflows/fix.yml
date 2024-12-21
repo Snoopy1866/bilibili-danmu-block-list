@@ -1,0 +1,63 @@
+name: fix
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**.json"
+      - "scripts/fix.py"
+      - ".github/workflows/fix.yml"
+
+defaults:
+  run:
+    shell: bash -e {0}
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.5.9"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Fix the json file
+        run: uv run scripts/fix.py
+
+      - name: Configure Git
+        run: |
+          git config --global user.name  "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for changes
+        id: git_diff
+        run: |
+          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        if: ${{ steps.git_diff.outputs.has_changes }} == 'true'
+        run: |
+          git add .
+          git commit -m "fix: auto fix json file"
+          git pull --rebase origin ${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

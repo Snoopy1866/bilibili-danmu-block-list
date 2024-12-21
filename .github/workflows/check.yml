@@ -1,0 +1,38 @@
+name: check
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**.json"
+      - "scripts/check.py"
+      - ".github/workflows/check.yml"
+
+defaults:
+  run:
+    shell: bash -e {0}
+
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+        with:
+          version: "0.5.9"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Install the project
+        run: uv sync --all-extras --dev
+
+      - name: Check the json file
+        run: uv run scripts/check.py

@@ -1,0 +1,14 @@
+[project]
+name = "bilibili-block-list"
+version = "0.1.0"
+description = "哔哩哔哩弹幕屏蔽列表处理脚本"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pypinyin>=0.53.0",
+]
+
+[dependency-groups]
+dev = [
+    "jsonschema>=4.23.0",
+]
