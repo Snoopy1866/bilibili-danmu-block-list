@@ -1,4 +1,4 @@
-name: fix
+name: release
 
 on:
   schedule:
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Get previous tag or default to changed=true
         id: previous_tag
         run: |
@@ -55,9 +55,9 @@ jobs:
       - name: Compare diff between old json and new json file
         run: |
           uv run scripts/diff.py
-          if ![ -e diff.md ]; then
+          if [ ! -e diff.md ]; then
             echo "rules has not beed changed since last release."
-            exit 0
+            exit 1
           fi
 
       - name: Create output json and release note file
