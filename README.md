@@ -7,7 +7,7 @@
 
 本仓库收集哔哩哔哩弹幕屏蔽规则。
 
-[规则清单](rules.md)
+[规则清单.md](rules.md) | [规则清单.json](bilibili-danmu-blocklist.json)
 
 ## 如何使用
 
