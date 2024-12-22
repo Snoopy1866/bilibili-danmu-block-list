@@ -1,7 +1,7 @@
 import json
 
 from const import BILIBILI_BLOCK, BILIBILI_BLOCK_RELEASE_OUTPUT
-from utils import render_markdown
+from json2md import render_markdown
 
 
 def make_json() -> None:
