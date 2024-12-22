@@ -88,7 +88,7 @@ document
    ```bash
    git add .
    git commit -m "feat: new rules"
-   git push feat
+   git push origin feat
    ```
 
 6. 发起 Pull Request
