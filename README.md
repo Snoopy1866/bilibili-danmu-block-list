@@ -75,7 +75,7 @@ document
    uv sync
    ```
 
-3. 新建一个分支
+3. 新建一个分支，名称任意（例如：`feat`）
 
    ```bash
    git checkout -b feat
@@ -88,7 +88,7 @@ document
    ```bash
    git add .
    git commit -m "feat: new rules"
-   git push
+   git push feat
    ```
 
 6. 发起 Pull Request
