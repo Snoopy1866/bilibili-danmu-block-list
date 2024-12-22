@@ -1,5 +1,10 @@
 # bilibili-danmu-block-list
 
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+![GitHub License](https://img.shields.io/github/license/Snoopy1866/bilibili-danmu-block-list)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Snoopy1866/bilibili-danmu-block-list/total)
+![GitHub Release](https://img.shields.io/github/v/release/Snoopy1866/bilibili-danmu-block-list)
+
 本仓库收集哔哩哔哩弹幕屏蔽规则。
 
 [规则清单](rules.md)
