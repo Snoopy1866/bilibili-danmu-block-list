@@ -16,30 +16,30 @@
 
 ## `bilibili-danmu-blocklist.json` 字段解释
 
-- 哔哩哔哩的字段：
+### 哔哩哔哩的字段：
 
-  | 名称     | 含义           | 类型      | 必要性     | 取值                                                                        |
-  | -------- | -------------- | --------- | ---------- | --------------------------------------------------------------------------- |
-  | _type_   | 规则类型       | _int_     | _required_ | <ul><li>0（屏蔽文本）</li><li>1（屏蔽正则）</li><li>2（屏蔽用户）</li></ul> |
-  | _filter_ | 规则内容       | _string_  | _required_ | _Any_                                                                       |
-  | _opened_ | 规则是否启用   | _boolean_ | _required_ | <ul><li>true</li><li>false</li></ul>                                        |
-  | _id_     | 规则唯一标识符 | _int_     | _optional_ | _Any_                                                                       |
+| 名称     | 含义           | 类型      | 必要性     | 取值                                                                        |
+| -------- | -------------- | --------- | ---------- | --------------------------------------------------------------------------- |
+| _type_   | 规则类型       | _int_     | _required_ | <ul><li>0（屏蔽文本）</li><li>1（屏蔽正则）</li><li>2（屏蔽用户）</li></ul> |
+| _filter_ | 规则内容       | _string_  | _required_ | _Any_                                                                       |
+| _opened_ | 规则是否启用   | _boolean_ | _required_ | <ul><li>true</li><li>false</li></ul>                                        |
+| _id_     | 规则唯一标识符 | _int_     | _optional_ | _Any_                                                                       |
 
-  > [!NOTE]
-  >
-  > - `id` 字段暂未启用
+> [!NOTE]
+>
+> - `id` 字段暂未启用
 
-- 本仓库添加的字段：
+### 本仓库添加的字段：
 
-  | 名称              | 含义         | 类型           | 必要性     | 可选值 |
-  | ----------------- | ------------ | -------------- | ---------- | ------ |
-  | _description_     | 规则描述     | _string_       | _optional_ | _Any_  |
-  | _examples_        | 规则匹配示例 | _list[string]_ | _optional_ | _Any_  |
-  | _excludeExamples_ | 规则排除示例 | _list[string]_ | _optional_ | _Any_  |
+| 名称              | 含义         | 类型           | 必要性     | 可选值 |
+| ----------------- | ------------ | -------------- | ---------- | ------ |
+| _description_     | 规则描述     | _string_       | _optional_ | _Any_  |
+| _examples_        | 规则匹配示例 | _list[string]_ | _optional_ | _Any_  |
+| _excludeExamples_ | 规则排除示例 | _list[string]_ | _optional_ | _Any_  |
 
-  > [!NOTE]
-  >
-  > `excludeExamples` 字段用于辅助正则表达式的编写，尽可能避免错杀正常弹幕。
+> [!NOTE]
+>
+> `excludeExamples` 字段用于辅助正则表达式的编写，尽可能避免错杀正常弹幕。
 
 ## 如何清空现有规则
 
@@ -75,7 +75,7 @@ document
    uv sync
    ```
 
-3. 新建一个分支
+3. 新建一个分支，名称任意（例如：`feat`）
 
    ```bash
    git checkout -b feat
@@ -88,7 +88,7 @@ document
    ```bash
    git add .
    git commit -m "feat: new rules"
-   git push
+   git push origin feat
    ```
 
 6. 发起 Pull Request
