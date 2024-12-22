@@ -48,7 +48,7 @@ jobs:
           git diff --exit-code
           if [ $? -eq 0 ]; then
             echo "No changes"
-            exit 1
+            exit 0
           fi
 
       - name: Commit changes
