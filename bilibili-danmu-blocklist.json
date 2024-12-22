@@ -142,7 +142,10 @@
     {
       "type": 1,
       "filter": "^桀{3,}$",
-      "opened": true
+      "opened": true,
+      "examples": [
+        "桀桀桀"
+      ]
     },
     {
       "type": 1,
@@ -205,12 +208,20 @@
     {
       "type": 1,
       "filter": "^(妙|秒)啊$",
-      "opened": true
+      "opened": true,
+      "examples": [
+        "妙啊",
+        "秒啊"
+      ]
     },
     {
       "type": 1,
       "filter": "^(天才|甜菜)",
-      "opened": true
+      "opened": true,
+      "examples": [
+        "天才",
+        "甜菜"
+      ]
     },
     {
       "type": 1,
@@ -233,8 +244,12 @@
     },
     {
       "type": 1,
-      "filter": "^.*丸辣$",
-      "opened": true
+      "filter": "^.*(丸|完)辣$",
+      "opened": true,
+      "examples": [
+        "丸辣",
+        "完辣"
+      ]
     },
     {
       "type": 1,
@@ -313,7 +328,11 @@
     {
       "type": 1,
       "filter": "^h{3,}$",
-      "opened": true
+      "opened": true,
+      "examples": [
+        "hhh",
+        "hhhhhh"
+      ]
     },
     {
       "type": 1,
