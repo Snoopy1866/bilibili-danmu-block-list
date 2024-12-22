@@ -15,11 +15,9 @@ defaults:
   run:
     shell: bash -e {0}
 
-
 jobs:
   check:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
