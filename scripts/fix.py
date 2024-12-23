@@ -5,6 +5,7 @@ from const import BILIBILI_BLOCK
 
 
 def sort() -> None:
+    """按照拼音排序规则"""
     with open(BILIBILI_BLOCK, "r", encoding="utf-8") as f:
         data = json.load(f)
 
