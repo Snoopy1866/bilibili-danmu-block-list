@@ -58,8 +58,8 @@ jobs:
             exit 1
           fi
 
-      - name: Create output json and release note file
-        run: uv run scripts/release.py
+      - name: Create bilibili-danmu-blocklist-output.json
+        run: uv run scripts/create_release_json.py
 
       - name: Set Git Config
         run: |

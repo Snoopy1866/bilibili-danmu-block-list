@@ -1,11 +1,15 @@
 name: fix
 
 on:
+  workflow_run:
+    workflows: ["check"]
+    types:
+      - completed
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - "**.json"
       - "scripts/fix.py"
+      - "scripts/create_rules_markdown.py"
       - ".github/workflows/fix.yml"
 
 defaults:
@@ -17,6 +21,7 @@ permissions:
 
 jobs:
   fix:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,8 +42,8 @@ jobs:
       - name: Fix the json file
         run: uv run scripts/fix.py
 
-      - name: Render markdown files
-        run: uv run scripts/json2md.py
+      - name: Create rules.md
+        run: uv run scripts/create_rules_markdown.py
 
       - name: Configure Git
         run: |
