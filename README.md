@@ -27,7 +27,7 @@
 
 | 名称   | 含义           | 类型      | 必要性     | 取值          |
 | ------ | -------------- | --------- | ---------- | ------------- |
-| type   | 规则类型       | _int_     | _required_ | [1, 2, 3]     |
+| type   | 规则类型       | _int_     | _required_ | [0,1,2]       |
 | filter | 规则内容       | _string_  | _required_ | _Any_         |
 | opened | 规则是否启用   | _boolean_ | _required_ | true \| false |
 | id     | 规则唯一标识符 | _int_     | _optional_ | _Any_         |
