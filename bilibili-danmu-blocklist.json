@@ -53,7 +53,7 @@
     },
     {
       "type": 1,
-      "filter": "(阿巴)*",
+      "filter": "(阿巴)+",
       "opened": true,
       "examples": [
         "阿巴阿巴"
