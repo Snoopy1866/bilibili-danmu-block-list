@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
+from time import time_ns
 
 
 class RuleType(Enum):
@@ -38,13 +39,16 @@ class Rule:
         self.examples = examples
         self.exclude_examples = exclude_examples
 
+    def __str__(self) -> str:
+        return f"Rule(id={self.id}, filter={self.filter})"
+
     @classmethod
     def from_dict(cls, dict: dict) -> Rule:
         try:
             type = RuleType(dict.get("type"))
             filter = dict.get("filter")
             opened = dict.get("opened")
-            id = dict.get("id", -1)
+            id = dict.get("id", time_ns())
             description = dict.get("description", "")
             examples = dict.get("examples", [])
             exclude_examples = dict.get("exclude_examples", [])
@@ -61,7 +65,7 @@ class Rule:
                 exclude_examples=exclude_examples,
             )
 
-    def to_dict(self, verbose: bool = False) -> dict:
+    def to_dict(self, verbose: bool = True) -> dict:
         if verbose:
             return {
                 "type": self.type.value,
@@ -70,7 +74,7 @@ class Rule:
                 "id": self.id,
                 "description": self.description,
                 "examples": self.examples,
-                "exclude_examples": self.exclude_examples,
+                "excludeExamples": self.exclude_examples,
             }
         else:
             return {
