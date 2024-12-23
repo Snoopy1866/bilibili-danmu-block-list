@@ -16,22 +16,22 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pypinyin" },
-    { name = "ruff" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "jsonschema" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "pypinyin", specifier = ">=0.53.0" },
-    { name = "ruff", specifier = ">=0.8.4" },
-]
+requires-dist = [{ name = "pypinyin", specifier = ">=0.53.0" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "jsonschema", specifier = ">=4.23.0" }]
+dev = [
+    { name = "jsonschema", specifier = ">=4.23.0" },
+    { name = "ruff", specifier = ">=0.8.4" },
+]
 
 [[package]]
 name = "jsonschema"
