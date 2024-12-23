@@ -44,7 +44,7 @@
 >
 > `excludeExamples` 字段用于辅助正则表达式的编写，尽可能避免错杀正常弹幕。
 
-## 如何清空现有规则
+## 如何清空规则
 
 分别切换到 `屏蔽文本`、`屏蔽正则` 标签，按 `F12` 打开开发者工具，在 `控制台` 中执行以下代码：
 
@@ -55,6 +55,26 @@ document
     button.click();
   });
 ```
+
+## 如何上传规则
+
+分别切换到 `屏蔽文本`、`屏蔽正则` 标签，按 `F12` 打开开发者工具，在 `控制台` 中执行以下代码：
+
+```javascript
+document
+  .querySelectorAll("span.bpx-player-block-list-sync")
+  .forEach((button) => {
+    button.click();
+  });
+```
+
+如果出现下图中部分规则未能同步的情况，请尝试重复执行上述代码。（如果仍然存在个别规则未能上传，请手动点击对应规则右侧的 🔄️ 按钮进行上传。）
+
+![block list sync not completed](res/block-list-sync-not-completed.png)
+
+> [!TIP]
+>
+> 上传成功后，可以在移动端 app 内打开任意视频，进入全屏，点击左下角 `弹幕设置`，进入 `更多工具` -> `添加屏蔽词`，点击右上角 `同步` 即可。
 
 ## 如何贡献
 
