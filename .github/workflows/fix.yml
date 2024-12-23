@@ -36,8 +36,10 @@ jobs:
       - name: Set up Python
         run: uv python install 3.13
 
-      - name: Install the project
-        run: uv sync --all-extras --dev
+      - name: Initialize the dev-environment
+        run: |
+          pip install ruff
+          uv sync --all-extras --dev
 
       - name: Format the python files
         run: ruff format
