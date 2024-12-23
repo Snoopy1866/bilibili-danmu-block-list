@@ -39,6 +39,9 @@ jobs:
       - name: Install the project
         run: uv sync --all-extras --dev
 
+      - name: Format the python files
+        run: ruff format
+
       - name: Fix the json file
         run: uv run scripts/fix.py
 

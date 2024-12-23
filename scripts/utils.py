@@ -86,16 +86,12 @@ class Rule:
         opened_markdown = "是" if self.opened else "否"
 
         if self.examples:
-            examples_markdown = "\n".join(
-                [f"    - `{example}`" for example in self.examples]
-            )
+            examples_markdown = "\n".join([f"    - `{example}`" for example in self.examples])
         else:
             examples_markdown = "    无"
 
         if self.exclude_examples:
-            exclude_examples_markdown = "\n".join(
-                [f"    - `{example}`" for example in self.exclude_examples]
-            )
+            exclude_examples_markdown = "\n".join([f"    - `{example}`" for example in self.exclude_examples])
         else:
             exclude_examples_markdown = "    无"
 
@@ -119,9 +115,7 @@ class Rule:
             examples_markdown = "/"
 
         if self.exclude_examples:
-            exclude_examples_markdown = "、".join(
-                [f"`{example}`" for example in self.exclude_examples]
-            )
+            exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
         else:
             exclude_examples_markdown = "/"
 
