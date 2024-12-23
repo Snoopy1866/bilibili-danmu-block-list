@@ -9,7 +9,7 @@ from utils import Rule, RuleType
 def validate_bilibili_block_json() -> None:
     with open(BILIBILI_BLOCK_SCHEMA, "r", encoding="utf-8") as f:
         schema = json.load(f)
-    with open(BILIBILI_BLOCK, "r", encoding="utf-8")   as f:
+    with open(BILIBILI_BLOCK, "r", encoding="utf-8") as f:
         instance = json.load(f)
 
     rules = instance["rules"]
