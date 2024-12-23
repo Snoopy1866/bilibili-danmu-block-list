@@ -51,7 +51,7 @@ class Rule:
             id = dict.get("id", time_ns())
             description = dict.get("description", "")
             examples = dict.get("examples", [])
-            exclude_examples = dict.get("exclude_examples", [])
+            exclude_examples = dict.get("excludeExamples", [])
         except Exception as e:
             raise ValueError(f"Invalid rule: {dict}") from e
         else:
