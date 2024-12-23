@@ -25,24 +25,20 @@
 
 ### 哔哩哔哩的字段：
 
-| 名称     | 含义           | 类型      | 必要性     | 取值                                                                        |
-| -------- | -------------- | --------- | ---------- | --------------------------------------------------------------------------- |
-| _type_   | 规则类型       | _int_     | _required_ | <ul><li>0（屏蔽文本）</li><li>1（屏蔽正则）</li><li>2（屏蔽用户）</li></ul> |
-| _filter_ | 规则内容       | _string_  | _required_ | _Any_                                                                       |
-| _opened_ | 规则是否启用   | _boolean_ | _required_ | <ul><li>true</li><li>false</li></ul>                                        |
-| _id_     | 规则唯一标识符 | _int_     | _optional_ | _Any_                                                                       |
-
-> [!NOTE]
->
-> - `id` 字段暂未启用
+| 名称       | 含义           | 类型      | 必要性     | 取值                                                                        |
+| ---------- | -------------- | --------- | ---------- | --------------------------------------------------------------------------- |
+| **type**   | 规则类型       | _int_     | _required_ | <ul><li>0（屏蔽文本）</li><li>1（屏蔽正则）</li><li>2（屏蔽用户）</li></ul> |
+| **filter** | 规则内容       | _string_  | _required_ | _Any_                                                                       |
+| **opened** | 规则是否启用   | _boolean_ | _required_ | <ul><li>true</li><li>false</li></ul>                                        |
+| **id**     | 规则唯一标识符 | _int_     | _optional_ | _Any_                                                                       |
 
 ### 本仓库添加的字段：
 
-| 名称              | 含义         | 类型           | 必要性     | 可选值 |
-| ----------------- | ------------ | -------------- | ---------- | ------ |
-| _description_     | 规则描述     | _string_       | _optional_ | _Any_  |
-| _examples_        | 规则匹配示例 | _list[string]_ | _optional_ | _Any_  |
-| _excludeExamples_ | 规则排除示例 | _list[string]_ | _optional_ | _Any_  |
+| 名称                | 含义         | 类型           | 必要性     | 可选值 |
+| ------------------- | ------------ | -------------- | ---------- | ------ |
+| **description**     | 规则描述     | _string_       | _optional_ | _Any_  |
+| **examples**        | 规则匹配示例 | _list[string]_ | _optional_ | _Any_  |
+| **excludeExamples** | 规则排除示例 | _list[string]_ | _optional_ | _Any_  |
 
 > [!NOTE]
 >
