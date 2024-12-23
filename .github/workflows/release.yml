@@ -70,12 +70,13 @@ jobs:
         id: create_tag
         run: |
           tag_name=$(date +"%Y%m%d")
+          echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
           git tag -a $tag_name -m "Release $tag_name"
           git push origin $tag_name
 
-      - name: Create Release
-        id: create_release
-        run: |
-          gh release create $tag_name bilibili-danmu-blocklist-output.json --title "Release $tag_name" -F diff.md
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: bilibili-danmu-blocklist-output.json
+          body_path: diff.md
+          tag_name: ${{ steps.create_tag.outputs.tag_name }}
+          make_latest: true
