@@ -107,21 +107,30 @@ class Rule:
         return markdown
 
     def to_markdown_tr(self, verbose: bool = False) -> str:
-        type_markdown = str(self.type)
+        """转换为 Markdown 表格行
+
+        Args:
+            verbose (bool, optional): 输出更详细的信息。 Defaults to False.
+
+        Returns:
+            str: Markdown 表格行
+        """
         filter_markdown = f"`{self.filter}`"
-        opened_markdown = "是" if self.opened else "否"
 
         if self.examples:
             examples_markdown = "、".join([f"`{example}`" for example in self.examples])
         else:
             examples_markdown = "/"
 
-        if self.exclude_examples:
-            exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
-        else:
-            exclude_examples_markdown = "/"
-
         if verbose:
+            type_markdown = str(self.type)
+            opened_markdown = "是" if self.opened else "否"
+
+            if self.exclude_examples:
+                exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
+            else:
+                exclude_examples_markdown = "/"
+
             markdown = f"| {filter_markdown} | {type_markdown} | {opened_markdown} | {examples_markdown} | {exclude_examples_markdown} |"
         else:
             markdown = f"| {filter_markdown} | {examples_markdown} |"
