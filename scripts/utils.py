@@ -66,23 +66,21 @@ class Rule:
             )
 
     def to_dict(self, verbose: bool = True) -> dict:
+        rule_dict: dict = {}
+        rule_dict["type"] = self.type.value
+        rule_dict["filter"] = self.filter
+        rule_dict["opened"] = self.opened
+        rule_dict["id"] = self.id
+
         if verbose:
-            return {
-                "type": self.type.value,
-                "filter": self.filter,
-                "opened": self.opened,
-                "id": self.id,
-                "description": self.description,
-                "examples": self.examples,
-                "excludeExamples": self.exclude_examples,
-            }
-        else:
-            return {
-                "type": self.type.value,
-                "filter": self.filter,
-                "opened": self.opened,
-                "id": self.id,
-            }
+            if self.description:
+                rule_dict["description"] = self.description
+            if self.examples:
+                rule_dict["examples"] = self.examples
+            if self.exclude_examples:
+                rule_dict["excludeExamples"] = self.exclude_examples
+
+        return rule_dict
 
     def to_markdown_ul(self) -> str:
         type_markdown = str(self.type)

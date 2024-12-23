@@ -15,7 +15,7 @@ def set_id() -> None:
 
     _dict: list[dict] = [obj.to_dict(verbose=True) for obj in _obj]
 
-    rules = _dict
+    data["rules"] = _dict
 
     with open(BILIBILI_BLOCK, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
