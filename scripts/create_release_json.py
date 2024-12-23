@@ -12,7 +12,7 @@ def main() -> None:
             data: dict = json.load(f)
         rules: list[Rule] = [Rule.from_dict(rule) for rule in data["rules"]]
 
-        rules_simplified = [rule.to_dict() for rule in rules]
+        rules_simplified = [rule.to_dict(verbose=False) for rule in rules]
 
         with open(BILIBILI_BLOCK_RELEASE_OUTPUT, "w", encoding="utf-8") as f:
             json.dump(rules_simplified, f, ensure_ascii=False)

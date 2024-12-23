@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from enum import Enum
+from time import time_ns
 
 
 class RuleType(Enum):
@@ -38,16 +39,19 @@ class Rule:
         self.examples = examples
         self.exclude_examples = exclude_examples
 
+    def __str__(self) -> str:
+        return f"Rule(id={self.id}, filter={self.filter})"
+
     @classmethod
     def from_dict(cls, dict: dict) -> Rule:
         try:
             type = RuleType(dict.get("type"))
             filter = dict.get("filter")
             opened = dict.get("opened")
-            id = dict.get("id", -1)
+            id = dict.get("id", time_ns())
             description = dict.get("description", "")
             examples = dict.get("examples", [])
-            exclude_examples = dict.get("exclude_examples", [])
+            exclude_examples = dict.get("excludeExamples", [])
         except Exception as e:
             raise ValueError(f"Invalid rule: {dict}") from e
         else:
@@ -61,24 +65,22 @@ class Rule:
                 exclude_examples=exclude_examples,
             )
 
-    def to_dict(self, verbose: bool = False) -> dict:
+    def to_dict(self, verbose: bool = True) -> dict:
+        rule_dict: dict = {}
+        rule_dict["type"] = self.type.value
+        rule_dict["filter"] = self.filter
+        rule_dict["opened"] = self.opened
+        rule_dict["id"] = self.id
+
         if verbose:
-            return {
-                "type": self.type.value,
-                "filter": self.filter,
-                "opened": self.opened,
-                "id": self.id,
-                "description": self.description,
-                "examples": self.examples,
-                "exclude_examples": self.exclude_examples,
-            }
-        else:
-            return {
-                "type": self.type.value,
-                "filter": self.filter,
-                "opened": self.opened,
-                "id": self.id,
-            }
+            if self.description:
+                rule_dict["description"] = self.description
+            if self.examples:
+                rule_dict["examples"] = self.examples
+            if self.exclude_examples:
+                rule_dict["excludeExamples"] = self.exclude_examples
+
+        return rule_dict
 
     def to_markdown_ul(self) -> str:
         type_markdown = str(self.type)
@@ -105,21 +107,30 @@ class Rule:
         return markdown
 
     def to_markdown_tr(self, verbose: bool = False) -> str:
-        type_markdown = str(self.type)
+        """转换为 Markdown 表格行
+
+        Args:
+            verbose (bool, optional): 输出更详细的信息。 Defaults to False.
+
+        Returns:
+            str: Markdown 表格行
+        """
         filter_markdown = f"`{self.filter}`"
-        opened_markdown = "是" if self.opened else "否"
 
         if self.examples:
             examples_markdown = "、".join([f"`{example}`" for example in self.examples])
         else:
             examples_markdown = "/"
 
-        if self.exclude_examples:
-            exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
-        else:
-            exclude_examples_markdown = "/"
-
         if verbose:
+            type_markdown = str(self.type)
+            opened_markdown = "是" if self.opened else "否"
+
+            if self.exclude_examples:
+                exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
+            else:
+                exclude_examples_markdown = "/"
+
             markdown = f"| {filter_markdown} | {type_markdown} | {opened_markdown} | {examples_markdown} | {exclude_examples_markdown} |"
         else:
             markdown = f"| {filter_markdown} | {examples_markdown} |"

@@ -8,7 +8,7 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - "scripts/fix.py"
+      - "scripts/fix_*.py"
       - "scripts/create_rules_markdown.py"
       - ".github/workflows/fix.yml"
 
@@ -41,11 +41,14 @@ jobs:
           pip install ruff
           uv sync --all-extras --dev
 
-      - name: Format the python files
+      - name: Fix - Format the python files
         run: ruff format
 
-      - name: Fix the json file
-        run: uv run scripts/fix.py
+      - name: Fix - Sort the json file
+        run: uv run scripts/fix_sort.py
+
+      - name: Fix - Add timestamp to the rules
+        run: uv run scripts/fix_id.py
 
       - name: Create rules.md
         run: uv run scripts/create_rules_markdown.py
