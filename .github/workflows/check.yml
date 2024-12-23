@@ -16,7 +16,33 @@ defaults:
     shell: bash -e {0}
 
 jobs:
-  check:
+  check-forbid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.9"
+          enable-cache: true
+
+      - name: Check for forbidden file changes
+        run: |
+          forbidden_files=(
+            "rules.md"
+            "diff.md"
+            "bilibili-danmu-blocklist-output.json"
+          )
+          changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          for file in "${forbidden_files[@]}"; do
+            if echo "$changed_files" | grep -q "$file"; then
+              echo "Error: Forbidden file $file was modified in this PR."
+              exit 1
+            fi
+          done
+
+  check-json:
+    needs: check-forbid
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
