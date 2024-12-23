@@ -20,26 +20,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get previous tag or default to changed=true
+      - name: Get the previous tag
         id: previous_tag
         run: |
           prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
 
           if [ "$prev_tag" == "none" ]; then
-            echo "No tags found. Setting changed=true by default."
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "No tags found. Please create the first tag manually."
+            exit 1
           else
             echo "Previous tag: $prev_tag"
-            echo "previous_tag=$prev_tag" >> $GITHUB_OUTPUT
           fi
 
-      - name: Get the json file fron previous tag
+      - name: Copy the json file from the previous tag
         run: |
-          temp_dir=$(mktemp -d)
-          git switch --detach $previous_tag
-          cp bilibili-danmu-blocklist.json $temp_dir/bilibili-danmu-blocklist-old.json
-          git switch -
-          cp $temp_dir/bilibili-danmu-blocklist-old.json bilibili-danmu-blocklist-old.json
+          prev_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+          git archive -o $prev_tag.zip $prev_tag
+          unzip $prev_tag.zip -d /tmp
+          cp /tmp/bilibili-danmu-blocklist.json bilibili-danmu-blocklist-old.json
 
       - uses: astral-sh/setup-uv@v5
         with:
