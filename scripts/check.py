@@ -22,9 +22,7 @@ def validate_bilibili_block_json() -> None:
 
     # 验证是否有重复的规则
     filters = [rule.filter for rule in rules]
-    duplicated_filters = [
-        filter for filter, count in Counter(filters).items() if count > 1
-    ]
+    duplicated_filters = [filter for filter, count in Counter(filters).items() if count > 1]
     if duplicated_filters:
         raise ValueError(f"重复的规则: {duplicated_filters}")
 

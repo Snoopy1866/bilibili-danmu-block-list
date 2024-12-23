@@ -11,4 +11,8 @@ dependencies = [
 [dependency-groups]
 dev = [
     "jsonschema>=4.23.0",
+    "ruff>=0.8.4",
 ]
+
+[tool.ruff]
+line-length = 120
