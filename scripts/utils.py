@@ -57,13 +57,13 @@ class Rule:
             try:
                 pattern = re.compile(self.filter)
                 for example in self.examples:
-                    if not pattern.match(example):
-                        raise ValueError(f"正则表达式未能匹配需屏蔽的字符串: {example}")
+                    if not pattern.search(example):
+                        raise ValueError(f"正则表达式未能匹配需屏蔽的字符串: '{example}'")
                 for example in self.exclude_examples:
-                    if pattern.match(example):
-                        raise ValueError(f"正则表达式错误匹配需排除的字符串: {example}")
-            except Exception as e:
-                raise ValueError(f"规则 {self} 的正则表达式无效") from e
+                    if pattern.search(example):
+                        raise ValueError(f"正则表达式错误匹配需排除的字符串: '{example}'")
+            except ValueError as e:
+                raise ValueError(f"规则 {self} 错误: {e}") from e
 
     @classmethod
     def from_dict(cls, dict: dict) -> Rule:
