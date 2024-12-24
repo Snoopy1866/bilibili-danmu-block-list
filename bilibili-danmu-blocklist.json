@@ -220,6 +220,12 @@
       "id": 1734955935777057757
     },
     {
+      "type": 0,
+      "filter": "绝绝子",
+      "opened": true,
+      "examples": ["绝绝子"]
+    },
+    {
       "type": 1,
       "filter": "^唯.真(神|史)",
       "opened": true,
