@@ -1,5 +1,4 @@
 import json
-import re
 from collections import Counter
 from jsonschema import validate
 
