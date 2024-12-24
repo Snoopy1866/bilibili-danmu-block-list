@@ -43,27 +43,30 @@ def main() -> None:
         added_rules, removed_rules, updated_rules = get_diff_rules(OLD_JSON, NEW_JSON)
 
         with open(DIFF_MARKDOWN, "w", encoding="utf-8") as f:
-            f.write("## 新增规则\n")
-            f.write("|规则|示例|\n")
-            f.write("|----|----|\n")
-            for rule in added_rules:
-                f.write(rule.to_markdown_tr(verbose=False))
+            if added_rules:
+                f.write("## 新增规则\n")
+                f.write("|规则|示例|\n")
+                f.write("|----|----|\n")
+                for rule in added_rules:
+                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
 
             f.write("\n")
 
-            f.write("## 更新规则\n")
-            f.write("|规则|示例|\n")
-            f.write("|----|----|\n")
-            for rule in updated_rules:
-                f.write(rule.to_markdown_tr(verbose=False))
+            if updated_rules:
+                f.write("## 更新规则\n")
+                f.write("|规则|示例|\n")
+                f.write("|----|----|\n")
+                for rule in updated_rules:
+                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
 
             f.write("\n")
 
-            f.write("## 移除规则\n")
-            f.write("|规则|示例|\n")
-            f.write("|----|----|\n")
-            for rule in removed_rules:
-                f.write(rule.to_markdown_tr(verbose=False))
+            if removed_rules:
+                f.write("## 移除规则\n")
+                f.write("|规则|示例|\n")
+                f.write("|----|----|\n")
+                for rule in removed_rules:
+                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
     except Exception as e:
         print(e)
         exit(1)
