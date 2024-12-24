@@ -1,4 +1,5 @@
 import json
+import re
 from collections import Counter
 from jsonschema import validate
 
@@ -56,6 +57,14 @@ def check_rule_of_user(rules: list[Rule]) -> None:
         raise ValueError(
             f"存在屏蔽用户的规则:\n{"\n".join([str(block_user_rule) for block_user_rule in block_user_rules])}"
         )
+    
+def check_regex_match(rules: list[Rule]) -> None:
+
+    for rule in rules:
+        if rule.type == RuleType.REGEX:
+            try:
+                pattern = re.compile(rule.filter)
+
 
 
 def main() -> None:
