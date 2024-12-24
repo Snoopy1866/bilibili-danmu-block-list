@@ -509,7 +509,6 @@
       "type": 1,
       "filter": "^.+[,，](([Yy][Ee][Ss])|([Nn][Oo]))[!！]?$",
       "opened": true,
-      "id": 1734955935777074719,
       "examples": [
         "AMD，YES！",
         "MTK，YES！",
