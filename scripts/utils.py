@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from enum import Enum
 from time import time_ns
 
@@ -45,8 +46,24 @@ class Rule:
         self.examples.sort(key=lambda example: lazy_pinyin(example))
         self.exclude_examples.sort(key=lambda example: lazy_pinyin(example))
 
+        # 检查正则表达式是否匹配
+        self.check_regex_match()
+
     def __str__(self) -> str:
         return f"Rule(id={self.id}, filter={self.filter})"
+
+    def check_regex_match(self) -> None:
+        if self.type == RuleType.REGEX:
+            try:
+                pattern = re.compile(self.filter)
+                for example in self.examples:
+                    if not pattern.search(example):
+                        raise ValueError(f"正则表达式未能匹配需屏蔽的字符串: '{example}'")
+                for example in self.exclude_examples:
+                    if pattern.search(example):
+                        raise ValueError(f"正则表达式错误匹配需排除的字符串: '{example}'")
+            except ValueError as e:
+                raise ValueError(f"规则 {self} 错误: {e}") from e
 
     @classmethod
     def from_dict(cls, dict: dict) -> Rule:
