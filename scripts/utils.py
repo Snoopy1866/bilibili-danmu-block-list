@@ -115,7 +115,7 @@ class Rule:
         Returns:
             str: Markdown 表格行
         """
-        filter_markdown = f"`{self.filter.replace("|", "\|")}`"
+        filter_markdown = f"`{self.filter.replace("|", r"\|")}`"
 
         if self.examples:
             examples_markdown = "、".join([f"`{example}`" for example in self.examples])
