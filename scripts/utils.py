@@ -3,6 +3,8 @@ from __future__ import annotations
 from enum import Enum
 from time import time_ns
 
+from pypinyin import lazy_pinyin
+
 
 class RuleType(Enum):
     TEXT = 0
@@ -38,6 +40,10 @@ class Rule:
         self.description = description
         self.examples = examples
         self.exclude_examples = exclude_examples
+
+        # 对 examples 和 exclude_examples 进行排序
+        self.examples.sort(key=lambda example: lazy_pinyin(example))
+        self.exclude_examples.sort(key=lambda example: lazy_pinyin(example))
 
     def __str__(self) -> str:
         return f"Rule(id={self.id}, filter={self.filter})"
