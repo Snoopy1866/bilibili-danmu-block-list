@@ -33,11 +33,6 @@ jobs:
           version: "0.5.9"
           enable-cache: true
 
-      - name: Configure Git
-        run: |
-          git config --global user.name  "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Check for forbidden file changes
         run: |
           forbidden_files=(
@@ -45,48 +40,13 @@ jobs:
             "diff.md"
             "bilibili-danmu-blocklist-output.json"
           )
-          base_commit=${{ github.event.pull_request.base.sha }}
-          head_commit=${{ github.event.pull_request.head.sha }}
-
-          # 检查累计提交是否更改了指定文件
-          changed_files=$(git diff --name-only $base_commit $head_commit)
+          changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
           for file in "${forbidden_files[@]}"; do
             if echo "$changed_files" | grep -q "$file"; then
-              is_changed_from_base=true
-              break
+              echo "Error: Forbidden file $file was modified in this PR."
+              exit 1
             fi
           done
-
-          # 如果累计提交修改了指定文件，则进一步排除 github-actions[bot] 的提交，检查其余提交是否更改了指定文件
-          if [ -n "$is_changed_from_base" ]; then
-            # 获取所有提交
-            all_commits=$(git log --pretty=format:"%H %an" $base_commit..$head_commit)
-
-            # 排除 github-actions[bot] 的提交
-            commits=$(echo "$all_commits" | grep -v "github-actions\[bot\]" | awk '{print $1}')
-
-            # 创建一个临时目录来模拟最终状态
-            temp_dir=$(mktemp -d)
-            git worktree add $temp_dir $base_commit
-
-            # 应用所有非 github-actions[bot] 的提交
-            for commit in $commits; do
-              git -C $temp_dir cherry-pick $commit || (git -C $temp_dir cherry-pick --continue || git -C $temp_dir cherry-pick --skip)
-            done
-
-            # 进行一次 squash 操作
-            git -C $temp_dir reset --soft $(git -C $temp_dir merge-base HEAD $base_commit)
-            git -C $temp_dir commit -m "Squashed commit"
-
-            # 检查最终状态是否更改了指定的文件
-            for file in "${forbidden_files[@]}"; do
-              if git -C $temp_dir ls-tree -r HEAD --name-only | grep -q "$file"; then
-                echo "Error: Forbidden file $file was modified in the commits."
-                git worktree remove $temp_dir --force
-                exit 1
-              fi
-            done
-          fi
 
   check-json:
     needs: check-forbid
