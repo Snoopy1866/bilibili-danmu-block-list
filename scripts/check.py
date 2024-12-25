@@ -1,5 +1,6 @@
 import json
 from collections import Counter
+import re
 from jsonschema import validate
 
 from const import BILIBILI_BLOCK_SCHEMA, BILIBILI_BLOCK
@@ -58,6 +59,30 @@ def check_rule_of_user(rules: list[Rule]) -> None:
         )
 
 
+def check_regex(rules: list[Rule]) -> None:
+    """检查正则表达式是否匹配
+
+    Args:
+        rules (list[Rule]): 规则列表
+
+    Raises:
+        ValueError: 正则表达式未能匹配需屏蔽的字符串
+        ValueError: 正则表达式错误匹配需排除的字符串
+    """
+    for rule in rules:
+        if rule.type == RuleType.REGEX:
+            try:
+                pattern = re.compile(rule.filter)
+                for example in rule.examples:
+                    if not pattern.search(example):
+                        raise ValueError(f"正则表达式未能匹配需屏蔽的字符串: '{example}'")
+                for example in rule.exclude_examples:
+                    if pattern.search(example):
+                        raise ValueError(f"正则表达式错误匹配需排除的字符串: '{example}'")
+            except ValueError as e:
+                raise ValueError(f"规则 {rule} 错误: {e}") from e
+
+
 def main() -> None:
     try:
         with open(BILIBILI_BLOCK_SCHEMA, "r", encoding="utf-8") as f:
@@ -74,6 +99,8 @@ def main() -> None:
         check_duplicate_ids(rules)
 
         check_rule_of_user(rules)
+
+        check_regex(rules)
     except Exception as e:
         print(e)
         exit(1)
