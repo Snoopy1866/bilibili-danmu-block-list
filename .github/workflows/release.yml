@@ -69,7 +69,7 @@ jobs:
       - name: Create a new tag
         id: create_tag
         run: |
-          tag_name=$(date +"%Y%m%d")
+          tag_name=$(date -d "+1 day" +"%Y%m%d")
           echo "tag_name=$tag_name" >> $GITHUB_OUTPUT
           git tag -a $tag_name -m "Release $tag_name"
           git push origin $tag_name
