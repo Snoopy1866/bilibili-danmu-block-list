@@ -1,5 +1,7 @@
 import json
 
+from pypinyin import lazy_pinyin
+
 from utils import Rule
 
 OLD_JSON = "bilibili-danmu-blocklist-old.json"
@@ -29,11 +31,22 @@ def get_diff_rules(old_json: str, new_json: str) -> tuple[list[Rule], list[Rule]
     new_ids = set(rule.id for rule in new_rules)
     added_ids = new_ids - old_ids
     removed_ids = old_ids - new_ids
-    updated_ids = old_ids & new_ids
+
+    same_ids = old_ids & new_ids
+    updated_ids = []
+    for id in same_ids:
+        old_rule = next(rule for rule in old_rules if rule.id == id)
+        new_rule = next(rule for rule in new_rules if rule.id == id)
+        if old_rule.filter != new_rule.filter:
+            updated_ids.append(id)
 
     added_rules = [rule for rule in new_rules if rule.id in added_ids]
     removed_rules = [rule for rule in old_rules if rule.id in removed_ids]
     updated_rules = [rule for rule in new_rules if rule.id in updated_ids]
+
+    added_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
+    removed_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
+    updated_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
 
     return added_rules, removed_rules, updated_rules
 
