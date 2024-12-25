@@ -499,7 +499,7 @@
     },
     {
       "type": 1,
-      "filter": "^[Xx][Ss]([Ww][Ll])$",
+      "filter": "^[Xx][Ss]([Ww][Ll])?$",
       "opened": true,
       "examples": [
         "xs",
