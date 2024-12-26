@@ -117,7 +117,7 @@ document
 
    ```bash
    git add .
-   git commit -m "feat: new rules"
+   git commit -m "feat: update rules"
    git push origin feat
    ```
 
