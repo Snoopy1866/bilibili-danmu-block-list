@@ -71,6 +71,7 @@ jobs:
         run: uv run scripts/check.py
 
   fix:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: check-json
     runs-on: ubuntu-latest
     steps:
