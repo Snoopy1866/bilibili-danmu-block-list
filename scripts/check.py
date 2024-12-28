@@ -81,6 +81,8 @@ def check_regex(rules: list[Rule]) -> None:
                         raise ValueError(f"正则表达式错误匹配需排除的字符串: '{example}'")
             except ValueError as e:
                 raise ValueError(f"规则 {rule} 错误: {e}") from e
+            except re.PatternError as e:
+                raise ValueError(f"规则 {rule} 错误: {e}") from e
 
 
 def main() -> None:
