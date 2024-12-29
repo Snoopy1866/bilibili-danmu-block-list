@@ -9,23 +9,16 @@ NEW_JSON = "bilibili-danmu-blocklist.json"
 DIFF_MARKDOWN = "diff.md"
 
 
-def get_diff_rules(old_json: str, new_json: str) -> tuple[list[Rule], list[Rule], list[Rule]]:
-    """获取新增、移除、更新的规则
+def get_diff_rule_ids(old_rules: list[Rule], new_rules: list[Rule]) -> tuple[list[int], list[int], list[int]]:
+    """获取新增、移除、更新的规则 ID
 
     Args:
-        old_json (str): 旧版本的 JSON 文件
-        new_json (str): 新版本的 JSON 文件
+        old_rules (list[Rule]): 旧版本的规则列表
+        new_rules (list[Rule]): 新版本的规则列表
 
     Returns:
-        tuple[list[Rule], list[Rule], list[Rule]]: 新增、移除、更新的规则
+        tuple[list[int], list[int], list[int]]: 新增、移除、更新的规则 ID
     """
-    with open(old_json, "r", encoding="utf-8") as f:
-        old_data = json.load(f)
-    with open(new_json, "r", encoding="utf-8") as f:
-        new_data = json.load(f)
-
-    old_rules: list[Rule] = [Rule.from_dict(rule) for rule in old_data["rules"]]
-    new_rules: list[Rule] = [Rule.from_dict(rule) for rule in new_data["rules"]]
 
     old_ids = set(rule.id for rule in old_rules)
     new_ids = set(rule.id for rule in new_rules)
@@ -40,20 +33,31 @@ def get_diff_rules(old_json: str, new_json: str) -> tuple[list[Rule], list[Rule]
         if old_rule.filter != new_rule.filter:
             updated_ids.append(id)
 
-    added_rules = [rule for rule in new_rules if rule.id in added_ids]
-    removed_rules = [rule for rule in old_rules if rule.id in removed_ids]
-    updated_rules = [rule for rule in new_rules if rule.id in updated_ids]
-
-    added_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
-    removed_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
-    updated_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
-
-    return added_rules, removed_rules, updated_rules
+    return added_ids, removed_ids, updated_ids
 
 
 def main() -> None:
     try:
-        added_rules, removed_rules, updated_rules = get_diff_rules(OLD_JSON, NEW_JSON)
+        with open(OLD_JSON, "r", encoding="utf-8") as f:
+            old_data = json.load(f)
+        with open(NEW_JSON, "r", encoding="utf-8") as f:
+            new_data = json.load(f)
+
+        old_rules: list[Rule] = [Rule.from_dict(rule) for rule in old_data["rules"]]
+        new_rules: list[Rule] = [Rule.from_dict(rule) for rule in new_data["rules"]]
+
+        added_ids, removed_ids, updated_ids = get_diff_rule_ids(old_rules, new_rules)
+
+        added_rules = [rule for rule in new_rules if rule.id in added_ids]
+        removed_rules = [rule for rule in old_rules if rule.id in removed_ids]
+        updated_rules_old = [rule for rule in old_rules if rule.id in updated_ids]
+        updated_rules_new = [rule for rule in new_rules if rule.id in updated_ids]
+
+        added_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
+        removed_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
+        updated_rules_old.sort(key=lambda rule: lazy_pinyin(rule.filter))
+        updated_rules_new.sort(key=lambda rule: lazy_pinyin(rule.filter))
+        updated_rules = zip(updated_rules_old, updated_rules_new)
 
         with open(DIFF_MARKDOWN, "w", encoding="utf-8") as f:
             if added_rules:
@@ -61,16 +65,19 @@ def main() -> None:
                 f.write("|规则|示例|\n")
                 f.write("|----|----|\n")
                 for rule in added_rules:
-                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
+                    f.write(f"|{rule.filter.to_markdown_td()}|{'、'.join(rule.examples)}|" + "\n")
 
             f.write("\n")
 
             if updated_rules:
                 f.write("## 更新规则\n")
-                f.write("|规则|示例|\n")
-                f.write("|----|----|\n")
+                f.write("|原规则|新规则|示例|\n")
+                f.write("|------|------|----|\n")
                 for rule in updated_rules:
-                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
+                    f.write(
+                        f"|{rule[0].filter.to_markdown_td()}|{rule[1].filter.to_markdown_td()}|{'、'.join(rule[1].examples)}|"
+                        + "\n"
+                    )
 
             f.write("\n")
 
@@ -79,7 +86,7 @@ def main() -> None:
                 f.write("|规则|示例|\n")
                 f.write("|----|----|\n")
                 for rule in removed_rules:
-                    f.write(rule.to_markdown_tr(verbose=False) + "\n")
+                    f.write(f"|{rule.filter.to_markdown_td()}|{'、'.join(rule.examples)}|" + "\n")
     except Exception as e:
         print(e)
         exit(1)

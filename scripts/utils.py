@@ -22,11 +22,23 @@ class RuleType(Enum):
             assert False, f"Unknown type: {self}"
 
 
+class Filter(str):
+    def __init__(self, filter: str) -> None:
+        super().__init__()
+        self.filter = filter
+
+    def to_markdown(self) -> str:
+        return f"`{self}`"
+
+    def to_markdown_td(self) -> str:
+        return f"{self.to_markdown().replace('|', '\\|')}"
+
+
 class Rule:
     def __init__(
         self,
         type: RuleType,
-        filter: str,
+        filter: Filter,
         opened: bool,
         id: int,
         description: str,
@@ -52,7 +64,7 @@ class Rule:
     def from_dict(cls, dict: dict) -> Rule:
         try:
             type = RuleType(dict.get("type"))
-            filter = dict.get("filter")
+            filter = Filter(dict.get("filter"))
             opened = dict.get("opened")
             id = dict.get("id", time_ns())
             description = dict.get("description", "")
@@ -90,7 +102,7 @@ class Rule:
 
     def to_markdown_ul(self) -> str:
         type_markdown = str(self.type)
-        filter_markdown = f"`{self.filter}`"
+        filter_markdown = self.filter.to_markdown()
         opened_markdown = "是" if self.opened else "否"
 
         if self.examples:
@@ -110,34 +122,4 @@ class Rule:
             + f"  - 匹配示例：\n{examples_markdown}\n"
             + f"  - 排除示例：\n{exclude_examples_markdown}\n"
         )
-        return markdown
-
-    def to_markdown_tr(self, verbose: bool = False) -> str:
-        """转换为 Markdown 表格行
-
-        Args:
-            verbose (bool, optional): 输出更详细的信息。 Defaults to False.
-
-        Returns:
-            str: Markdown 表格行
-        """
-        filter_markdown = f"`{self.filter.replace("|", r"\|")}`"
-
-        if self.examples:
-            examples_markdown = "、".join([f"`{example}`" for example in self.examples])
-        else:
-            examples_markdown = "/"
-
-        if verbose:
-            type_markdown = str(self.type)
-            opened_markdown = "是" if self.opened else "否"
-
-            if self.exclude_examples:
-                exclude_examples_markdown = "、".join([f"`{example}`" for example in self.exclude_examples])
-            else:
-                exclude_examples_markdown = "/"
-
-            markdown = f"| {filter_markdown} | {type_markdown} | {opened_markdown} | {examples_markdown} | {exclude_examples_markdown} |"
-        else:
-            markdown = f"| {filter_markdown} | {examples_markdown} |"
         return markdown
