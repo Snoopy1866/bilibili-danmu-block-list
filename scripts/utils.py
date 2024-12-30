@@ -23,10 +23,6 @@ class RuleType(Enum):
 
 
 class Filter(str):
-    def __init__(self, filter: str) -> None:
-        super().__init__(filter)
-        self.filter = filter
-
     def to_markdown(self) -> str:
         return f"`{self}`"
 
