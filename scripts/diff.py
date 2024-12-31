@@ -55,9 +55,12 @@ def main() -> None:
 
         added_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
         removed_rules.sort(key=lambda rule: lazy_pinyin(rule.filter))
-        updated_rules_old.sort(key=lambda rule: lazy_pinyin(rule.filter))
-        updated_rules_new.sort(key=lambda rule: lazy_pinyin(rule.filter))
-        updated_rules = zip(updated_rules_old, updated_rules_new)
+
+        # 先按照 id 排序，zip 后再按照旧规则的 filter 排序
+        updated_rules_old.sort(key=lambda rule: rule.id)
+        updated_rules_new.sort(key=lambda rule: rule.id)
+        updated_rules = list(zip(updated_rules_old, updated_rules_new))
+        updated_rules.sort(key=lambda rule: lazy_pinyin(rule[0].filter))
 
         with open(DIFF_MARKDOWN, "w", encoding="utf-8") as f:
             if added_rules:
