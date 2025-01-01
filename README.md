@@ -59,11 +59,11 @@ document
 >
 > 上传成功后，可以在移动端 app 内打开任意视频，进入全屏，点击左下角 `弹幕设置`，进入 `更多工具` -> `添加屏蔽词`，点击右上角 `同步`，即可将 web 端设置的屏蔽规则同步到 app 端，具体操作步骤如下：
 >
-> ![](res/block-list-sync-app-step-1.jpg)
+> ![step1](res/block-list-sync-app-step-1.jpg)
 >
-> ![](res/block-list-sync-app-step-2.jpg)
+> ![step2](res/block-list-sync-app-step-2.jpg)
 >
-> ![](res/block-list-sync-app-step-3.jpg)
+> ![step3](res/block-list-sync-app-step-3.jpg)
 
 > [!WARNING]
 >
