@@ -49,7 +49,6 @@ jobs:
           done
 
   check-json:
-    needs: check-forbid
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
