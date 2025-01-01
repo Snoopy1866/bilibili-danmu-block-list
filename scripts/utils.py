@@ -30,6 +30,14 @@ class Filter(str):
         return f"{self.to_markdown().replace('|', '\\|')}"
 
 
+class Examples(list):
+    def to_markdown_td(self) -> str:
+        if self:
+            return "、".join([f"`{example}`" for example in self])
+        else:
+            return "/"
+
+
 class Rule:
     def __init__(
         self,
@@ -38,8 +46,8 @@ class Rule:
         opened: bool,
         id: int,
         description: str,
-        examples: list[str],
-        exclude_examples: list[str],
+        examples: Examples,
+        exclude_examples: Examples,
     ):
         self.type = type
         self.filter = filter
@@ -64,8 +72,8 @@ class Rule:
             opened = dict.get("opened")
             id = dict.get("id", time_ns())
             description = dict.get("description", "")
-            examples = dict.get("examples", [])
-            exclude_examples = dict.get("excludeExamples", [])
+            examples = Examples(dict.get("examples", []))
+            exclude_examples = Examples(dict.get("excludeExamples", []))
         except Exception as e:
             raise ValueError(f"Invalid rule: {dict}") from e
         else:
