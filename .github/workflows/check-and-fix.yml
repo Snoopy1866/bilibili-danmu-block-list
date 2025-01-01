@@ -43,7 +43,7 @@ jobs:
           changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
           for file in "${forbidden_files[@]}"; do
             if echo "$changed_files" | grep -q "$file"; then
-              echo "Error: Forbidden file $file was modified in this PR."
+              echo "Error: Forbidden file $file was modified in this PR. If it's modified by github-actions, please ignore this error."
               exit 1
             fi
           done
