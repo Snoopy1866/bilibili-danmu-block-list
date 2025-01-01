@@ -17,8 +17,7 @@
 
 ### 如何导入规则
 
-1. 前往 [Release](https://github.com/Snoopy1866/bilibili-danmu-block-list/releases/latest) 下载名为 `bilibili-danmu-blocklist-output.json
-` 的最新版规则文件。
+1. 前往 [Release](https://github.com/Snoopy1866/bilibili-danmu-block-list/releases/latest) 下载名为 `bilibili-danmu-blocklist-output.json` 的最新版规则文件。
 
 2. 进入任意哔哩哔哩视频页面，点击 `弹幕列表` 右侧的 ⠇，选择 `屏蔽设定`：
    ![step1](res/how-to-use-step-1.png)
@@ -52,13 +51,19 @@ document
   });
 ```
 
-如果出现下图中部分规则未上传的情况，请尝试重复执行上述代码。
+如果出现下图中部分规则未上传的情况，请尝试重复执行上述代码，大部分情况下均可以上传成功。
 
 ![block list sync not completed](res/block-list-sync-not-completed.png)
 
 > [!TIP]
 >
-> 上传成功后，可以在移动端 app 内打开任意视频，进入全屏，点击左下角 `弹幕设置`，进入 `更多工具` -> `添加屏蔽词`，点击右上角 `同步`，即可将 web 端设置的屏蔽规则同步到 app 端。
+> 上传成功后，可以在移动端 app 内打开任意视频，进入全屏，点击左下角 `弹幕设置`，进入 `更多工具` -> `添加屏蔽词`，点击右上角 `同步`，即可将 web 端设置的屏蔽规则同步到 app 端，具体操作步骤如下：
+>
+> ![](res/block-list-sync-app-step-1.jpg)
+>
+> ![](res/block-list-sync-app-step-2.jpg)
+>
+> ![](res/block-list-sync-app-step-3.jpg)
 
 > [!WARNING]
 >
