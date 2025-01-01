@@ -51,7 +51,7 @@ document
   });
 ```
 
-如果出现下图中部分规则未上传的情况，请尝试重复执行上述代码，大部分情况下均可以上传成功。
+如果出现下图中部分规则未上传的情况，请尝试重复执行上述代码，大部分规则均可以上传成功。
 
 ![block list sync not completed](res/block-list-sync-not-completed.png)
 
