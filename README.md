@@ -11,11 +11,11 @@
 
 ## 使用说明
 
+### 如何导入规则
+
 > [!NOTE]
 >
-> 以下操作均在 web 端进行。
-
-### 如何导入规则
+> 你只能在 web 端导入规则。
 
 1. 前往 [Release](https://github.com/Snoopy1866/bilibili-danmu-block-list/releases/latest) 下载名为 `bilibili-danmu-blocklist-output.json` 的最新版规则文件。
 
