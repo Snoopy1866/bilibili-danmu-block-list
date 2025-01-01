@@ -7,11 +7,18 @@
 
 本仓库收集哔哩哔哩弹幕屏蔽规则。
 
-[规则清单.md](rules.md) | [规则清单.json](bilibili-danmu-blocklist.json)
+查看 [规则清单.md](rules.md) | [规则清单.json](bilibili-danmu-blocklist.json)
 
-## 如何使用
+## 使用说明
 
-1. 前往 [Release](https://github.com/Snoopy1866/bilibili-danmu-block-list/releases) 下载最新版规则文件。
+> [!NOTE]
+>
+> 以下操作均在 web 端进行。
+
+### 如何导入规则
+
+1. 前往 [Release](https://github.com/Snoopy1866/bilibili-danmu-block-list/releases/latest) 下载名为 `bilibili-danmu-blocklist-output.json
+` 的最新版规则文件。
 
 2. 进入任意哔哩哔哩视频页面，点击 `弹幕列表` 右侧的 ⠇，选择 `屏蔽设定`：
    ![step1](res/how-to-use-step-1.png)
@@ -21,30 +28,7 @@
 
 4. 在弹出的窗口中，找到在步骤 1 中下载的 json 文件，点击 `打开` 即可。
 
-## `bilibili-danmu-blocklist.json` 字段解释
-
-### 哔哩哔哩的字段：
-
-| 名称   | 含义           | 类型      | 必要性     | 取值          |
-| ------ | -------------- | --------- | ---------- | ------------- |
-| type   | 规则类型       | _int_     | _required_ | [0,1,2]       |
-| filter | 规则内容       | _string_  | _required_ | _Any_         |
-| opened | 规则是否启用   | _boolean_ | _required_ | true \| false |
-| id     | 规则唯一标识符 | _int_     | _optional_ | _Any_         |
-
-### 本仓库添加的字段：
-
-| 名称            | 含义         | 类型            | 必要性     | 可选值 |
-| --------------- | ------------ | --------------- | ---------- | ------ |
-| description     | 规则描述     | _string_        | _optional_ | _Any_  |
-| examples        | 规则匹配示例 | _Array[string]_ | _optional_ | _Any_  |
-| excludeExamples | 规则排除示例 | _Array[string]_ | _optional_ | _Any_  |
-
-> [!NOTE]
->
-> `excludeExamples` 字段用于辅助正则表达式的编写，尽可能避免错杀正常弹幕。
-
-## 如何清空规则
+### 如何清空规则
 
 分别切换到 `屏蔽文本`、`屏蔽正则` 标签，按 `F12` 打开开发者工具，在 `控制台` 中执行以下代码：
 
@@ -56,7 +40,7 @@ document
   });
 ```
 
-## 如何上传规则
+### 如何同步规则
 
 分别切换到 `屏蔽文本`、`屏蔽正则` 标签，按 `F12` 打开开发者工具，在 `控制台` 中执行以下代码：
 
@@ -83,7 +67,11 @@ document
 > - `(?<!乾)坤`
 > - `(没|难)?((?<!鹬)蚌|崩|绷)(埠|不)?(住)?(了)?`
 
-## 如何贡献
+> [!WARNING]
+>
+> 尽管通过上述方式可以将 web 端的规则可以同步到移动端，但实际上仍然存在部分规则无法在移动端生效的情况，原因未知。
+
+## 贡献指南
 
 推荐使用 [VSCode](https://code.visualstudio.com/Download) 编辑规则文件。
 
@@ -122,6 +110,30 @@ document
    ```
 
 6. 发起 Pull Request
+
+### `bilibili-danmu-blocklist.json` 字段解释
+
+#### 哔哩哔哩识别的字段：
+
+| 名称   | 含义           | 类型      | 必要性     | 取值          |
+| ------ | -------------- | --------- | ---------- | ------------- |
+| type   | 规则类型       | _int_     | _required_ | [0,1,2]       |
+| filter | 规则内容       | _string_  | _required_ | _Any_         |
+| opened | 规则是否启用   | _boolean_ | _required_ | true \| false |
+| id     | 规则唯一标识符 | _int_     | _optional_ | _Any_         |
+
+#### 本仓库添加的字段：
+
+| 名称            | 含义         | 类型            | 必要性     | 可选值 |
+| --------------- | ------------ | --------------- | ---------- | ------ |
+| description     | 规则描述     | _string_        | _optional_ | _Any_  |
+| examples        | 规则匹配示例 | _Array[string]_ | _optional_ | _Any_  |
+| excludeExamples | 规则排除示例 | _Array[string]_ | _optional_ | _Any_  |
+
+> [!NOTE]
+>
+> 1. `excludeExamples` 字段用于辅助正则表达式的编写，尽可能避免错杀正常弹幕。
+> 2. `description` 字段暂未启用，后续可能会移除。
 
 > [!IMPORTANT]
 >
