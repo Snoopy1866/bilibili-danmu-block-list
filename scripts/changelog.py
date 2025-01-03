@@ -6,10 +6,10 @@ from utils import Rule
 
 OLD_JSON = "bilibili-danmu-blocklist-old.json"
 NEW_JSON = "bilibili-danmu-blocklist.json"
-DIFF_MARKDOWN = "diff.md"
+DIFF_MARKDOWN = "changelog.md"
 
 
-def get_diff_rule_ids(old_rules: list[Rule], new_rules: list[Rule]) -> tuple[list[int], list[int], list[int]]:
+def get_changed_rule_ids(old_rules: list[Rule], new_rules: list[Rule]) -> tuple[list[int], list[int], list[int]]:
     """获取新增、移除、更新的规则 ID
 
     Args:
@@ -46,7 +46,7 @@ def main() -> None:
         old_rules: list[Rule] = [Rule.from_dict(rule) for rule in old_data["rules"]]
         new_rules: list[Rule] = [Rule.from_dict(rule) for rule in new_data["rules"]]
 
-        added_ids, removed_ids, updated_ids = get_diff_rule_ids(old_rules, new_rules)
+        added_ids, removed_ids, updated_ids = get_changed_rule_ids(old_rules, new_rules)
 
         added_rules = [rule for rule in new_rules if rule.id in added_ids]
         removed_rules = [rule for rule in old_rules if rule.id in removed_ids]

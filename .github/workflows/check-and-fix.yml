@@ -37,7 +37,7 @@ jobs:
         run: |
           forbidden_files=(
             "rules.md"
-            "diff.md"
+            "changelog.md"
             "bilibili-danmu-blocklist-output.json"
           )
           changed_files=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
