@@ -92,35 +92,6 @@ def main() -> None:
                     for rule in removed_rules:
                         f.write(f"|{rule.filter.to_markdown_td()}|{rule.examples.to_markdown_td()}|" + "\n")
 
-        # if added_rules or updated_rules or removed_rules:
-        #     with open(DIFF_MARKDOWN, "w", encoding="utf-8") as f:
-        #         if added_rules:
-        #             f.write("## 新增规则\n")
-        #             f.write("|规则|示例|\n")
-        #             f.write("|----|----|\n")
-        #             for rule in added_rules:
-        #                 f.write(f"|{rule.filter.to_markdown_td()}|{rule.examples.to_markdown_td()}|" + "\n")
-
-        #         f.write("\n")
-
-        #         if updated_rules:
-        #             f.write("## 更新规则\n")
-        #             f.write("|原规则|新规则|示例|\n")
-        #             f.write("|------|------|----|\n")
-        #             for rule in updated_rules:
-        #                 f.write(
-        #                     f"|{rule[0].filter.to_markdown_td()}|{rule[1].filter.to_markdown_td()}|{rule[1].examples.to_markdown_td()}|"
-        #                     + "\n"
-        #                 )
-
-        #         f.write("\n")
-
-        #         if removed_rules:
-        #             f.write("## 移除规则\n")
-        #             f.write("|规则|示例|\n")
-        #             f.write("|----|----|\n")
-        #             for rule in removed_rules:
-        #                 f.write(f"|{rule.filter.to_markdown_td()}|{rule.examples.to_markdown_td()}|" + "\n")
     except Exception as e:
         print(e)
         exit(1)
