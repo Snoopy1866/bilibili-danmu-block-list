@@ -50,10 +50,10 @@ jobs:
       - name: Install the project
         run: uv sync --all-extras --dev
 
-      - name: Compare diff between old json and new json file
+      - name: Create the changelog
         run: |
-          uv run scripts/diff.py
-          if [ ! -e diff.md ]; then
+          uv run scripts/changelog.py
+          if [ ! -e changelog.md ]; then
             echo "rules has not beed changed since last release."
             exit 1
           fi
@@ -77,6 +77,6 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: bilibili-danmu-blocklist-output.json
-          body_path: diff.md
+          body_path: changelog.md
           tag_name: ${{ steps.create_tag.outputs.tag_name }}
           make_latest: true
