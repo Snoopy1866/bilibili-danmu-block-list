@@ -76,6 +76,11 @@ document
 >
 > 尽管通过上述方式可以将 web 端的规则同步到移动端，但实际上仍然存在部分规则无法在移动端生效的情况，原因未知。
 
+## 其他说明
+
+- 如果你需要配合 [pakku.js](https://github.com/xmcp/pakku.js) 使用，建议关闭弹幕数量标记显示，否则部分规则可能无法生效。
+  ![other-pakku.js](res/other-pakku-js.png)
+
 ## 贡献指南
 
 推荐使用 [VSCode](https://code.visualstudio.com/Download) 编辑规则文件。
