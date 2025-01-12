@@ -21,7 +21,7 @@ def check_duplicate_filters(rules: list[Rule]) -> None:
     duplicated_rules = [rule for rule in rules if rule.filter in duplicated_filters]
     if duplicated_filters:
         raise ValueError(
-            f"存在过滤器重复的规则:\n{"\n".join([str(duplicated_rule) for duplicated_rule in duplicated_rules])}"
+            f"存在过滤器重复的规则:\n{'\n'.join([str(duplicated_rule) for duplicated_rule in duplicated_rules])}"
         )
 
 
@@ -39,7 +39,7 @@ def check_duplicate_ids(rules: list[Rule]) -> None:
     duplicated_rules = [rule for rule in rules if rule.id in duplicated_ids]
     if duplicated_ids:
         raise ValueError(
-            f"存在 ID 重复的规则:\n{"\n".join([str(duplicated_rule) for duplicated_rule in duplicated_rules])}"
+            f"存在 ID 重复的规则:\n{'\n'.join([str(duplicated_rule) for duplicated_rule in duplicated_rules])}"
         )
 
 
@@ -55,7 +55,7 @@ def check_rule_of_user(rules: list[Rule]) -> None:
     block_user_rules = [rule for rule in rules if rule.type == RuleType.USER]
     if block_user_rules:
         raise ValueError(
-            f"存在屏蔽用户的规则:\n{"\n".join([str(block_user_rule) for block_user_rule in block_user_rules])}"
+            f"存在屏蔽用户的规则:\n{'\n'.join([str(block_user_rule) for block_user_rule in block_user_rules])}"
         )
 
 
