@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import datetime
+
 from enum import Enum
 from time import time_ns
 
@@ -110,20 +112,22 @@ class Rule:
         opened_markdown = "是" if self.opened else "否"
 
         if self.examples:
-            examples_markdown = "\n".join([f"    - `{example}`" for example in self.examples])
+            examples_markdown = "\n".join([f"  - `{example}`" for example in self.examples])
         else:
             examples_markdown = "    无"
 
         if self.exclude_examples:
-            exclude_examples_markdown = "\n".join([f"    - `{example}`" for example in self.exclude_examples])
+            exclude_examples_markdown = "\n".join([f"  - `{example}`" for example in self.exclude_examples])
         else:
             exclude_examples_markdown = "    无"
 
         markdown = (
-            f"- {filter_markdown}\n"
-            + f"  - 类型：{type_markdown}\n"
-            + f"  - 是否启用：{opened_markdown}\n"
-            + f"  - 匹配示例：\n{examples_markdown}\n"
-            + f"  - 排除示例：\n{exclude_examples_markdown}\n"
+            f"## {filter_markdown}\n"
+            + "\n"
+            + f"- 时间戳：{datetime.datetime.fromtimestamp(self.id / 1_000_000_000, datetime.timezone.utc).isoformat()}\n"
+            + f"- 类型：{type_markdown}\n"
+            + f"- 是否启用：{opened_markdown}\n"
+            + f"- 匹配示例：\n{examples_markdown}\n"
+            + f"- 排除示例：\n{exclude_examples_markdown}\n"
         )
         return markdown
