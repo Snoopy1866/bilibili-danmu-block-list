@@ -124,7 +124,7 @@ class Rule:
         markdown = (
             f"## {filter_markdown}\n"
             + "\n"
-            + f"- 时间戳：{datetime.datetime.fromtimestamp(self.id / 1_000_000_000, datetime.timezone.utc).isoformat()}\n"
+            + f"- 收录时间：{datetime.datetime.fromtimestamp(self.id / 1_000_000_000, datetime.timezone.utc).isoformat()}\n"
             + f"- 类型：{type_markdown}\n"
             + f"- 是否启用：{opened_markdown}\n"
             + f"- 匹配示例：\n{examples_markdown}\n"
