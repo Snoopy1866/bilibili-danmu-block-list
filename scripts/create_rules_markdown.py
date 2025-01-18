@@ -17,6 +17,7 @@ def main():
             f.write("\n")
             for rule_markdown in rules_markdown:
                 f.write(rule_markdown)
+                f.write("\n")
     except Exception as e:
         print(e)
         exit(1)
