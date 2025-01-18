@@ -107,6 +107,7 @@ class Rule:
         return rule_dict
 
     def to_markdown_ul(self) -> str:
+        id_markdown = f"_{datetime.datetime.fromtimestamp(self.id / 1_000_000_000, datetime.timezone.utc).isoformat()}_"
         type_markdown = str(self.type)
         filter_markdown = self.filter.to_markdown()
         opened_markdown = "是" if self.opened else "否"
@@ -124,7 +125,7 @@ class Rule:
         markdown = (
             f"## {filter_markdown}\n"
             + "\n"
-            + f"- 收录时间：{datetime.datetime.fromtimestamp(self.id / 1_000_000_000, datetime.timezone.utc).isoformat()}\n"
+            + f"- 收录时间：{id_markdown}\n"
             + f"- 类型：{type_markdown}\n"
             + f"- 是否启用：{opened_markdown}\n"
             + f"- 匹配示例：\n{examples_markdown}\n"
