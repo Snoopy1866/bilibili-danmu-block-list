@@ -163,7 +163,7 @@ document
 ## 相关链接
 
 - [正则表达式指南](https://docs.python.org/zh-cn/3.13/howto/regex.html)
-- [正则表达式可视化](https://jex.im/regulex)
+- [正则表达式可视化](https://jianyu.io/regulex)
 - [正则表达式测试](https://www.jyshare.com/front-end/854)
 
 ## 类似的仓库
