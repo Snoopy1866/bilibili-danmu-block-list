@@ -12,13 +12,14 @@
     },
     {
       "type": 1,
-      "filter": "(.+)\\1{5,}",
+      "filter": "(.+)\\1{2,}",
       "opened": true,
       "id": 1735714325195369908,
       "examples": [
         "111111111",
         "aaaaaaaaa",
         "哈哈哈哈哈哈",
+        "hhh",
         "o h h h h h h h h h h h h h h h h h h h h h h h h h h h h h h h h",
         "o▬▬◙▅▅▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇◤",
         "——————————=》》☆》☆》=《༺=☆=༻》=《☆《☆《《=——————————",
@@ -860,16 +861,6 @@
         "MTK，YES！",
         "NVIDIA，NO!",
         "amd yes"
-      ]
-    },
-    {
-      "type": 1,
-      "filter": "^h{3,}$",
-      "opened": true,
-      "id": 1734955935777075901,
-      "examples": [
-        "hhh",
-        "hhhhhh"
       ]
     },
     {
