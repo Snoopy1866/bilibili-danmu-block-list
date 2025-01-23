@@ -851,14 +851,15 @@
     },
     {
       "type": 1,
-      "filter": "^.+[,，](([Yy][Ee][Ss])|([Nn][Oo]))[!！]?$",
+      "filter": "^.+(([Yy][Ee][Ss])|([Nn][Oo]))[!！]?$",
       "opened": true,
       "id": 1735048722228021763,
       "examples": [
         "AMD，YES！",
         "Intel,YES！",
         "MTK，YES！",
-        "NVIDIA，NO!"
+        "NVIDIA，NO!",
+        "amd yes"
       ]
     },
     {
