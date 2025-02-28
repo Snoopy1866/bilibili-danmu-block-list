@@ -85,6 +85,15 @@
       ]
     },
     {
+      "type": 0,
+      "filter": "诗人握持",
+      "opened": true,
+      "id": 1740740757815853540,
+      "examples": [
+        "诗人握持"
+      ]
+    },
+    {
       "type": 1,
       "filter": ".+交个朋友$",
       "opened": true,
