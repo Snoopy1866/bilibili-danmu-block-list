@@ -94,6 +94,14 @@
       ]
     },
     {
+      "type": 0,
+      "filter": "那我问你",
+      "opened": true,
+      "examples": [
+        "那我问你"
+      ]
+    },
+    {
       "type": 1,
       "filter": ".+交个朋友$",
       "opened": true,
