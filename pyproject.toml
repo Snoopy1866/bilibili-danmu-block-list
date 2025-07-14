@@ -11,7 +11,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "ruff==0.12.2"
+    "ruff==0.12.3"
 ]
 
 [tool.ruff]
