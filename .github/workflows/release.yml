@@ -41,7 +41,7 @@ jobs:
 
       - uses: astral-sh/setup-uv@v7
         with:
-          version: "0.9.5"
+          version: "0.9.6"
           enable-cache: true
 
       - name: Set up Python
